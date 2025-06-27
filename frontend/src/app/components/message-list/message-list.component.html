@@ -1,5 +1,24 @@
-<div *ngFor="let msg of messages" class="message-card">
-  <p><strong>To:</strong> {{ msg.to }}</p>
-  <p><strong>Message:</strong> {{ msg.body }}</p>
-  <p><strong>Status:</strong> {{ msg.status }}</p>
+<div class="mt-6 space-y-4 max-w-md mx-auto">
+  <div
+    *ngFor="let msg of messages"
+    class="bg-blue-100 border border-blue-300 rounded-lg p-4 shadow-sm text-sm"
+  >
+    <div class="flex justify-between items-center mb-1">
+      <span class="font-semibold text-blue-700">You</span>
+    </div>
+    <p class="text-gray-800 break-words">{{ msg.body }}</p>
+
+    <div class="text-right mt-2">
+      <span
+        class="inline-block px-2 py-0.5 rounded text-xs"
+        [ngClass]="{
+          'bg-green-100 text-green-700': msg.status === 'delivered',
+          'bg-yellow-100 text-yellow-700': msg.status === 'sent',
+          'bg-red-100 text-red-700': msg.status === 'failed'
+        }"
+      >
+        {{ msg.status | titlecase }}
+      </span>
+    </div>
+  </div>
 </div>
