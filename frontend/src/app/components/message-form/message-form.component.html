@@ -1,0 +1,5 @@
+<form (ngSubmit)="send()">
+  <input type="text" placeholder="To" [(ngModel)]="message.to" name="to" required />
+  <textarea placeholder="Message" [(ngModel)]="message.body" name="body" required></textarea>
+  <button type="submit">Send</button>
+</form>
