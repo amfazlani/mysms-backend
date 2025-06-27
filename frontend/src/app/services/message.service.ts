@@ -8,6 +8,7 @@ export interface Message {
   to: string;
   body: string;
   status?: string;
+  created_at?: string;  // optional now
 }
 
 @Injectable({ providedIn: 'root' })

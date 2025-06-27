@@ -5,6 +5,9 @@
   >
     <div class="flex justify-between items-center mb-1">
       <span class="font-semibold text-blue-700">You</span>
+      <span class="text-gray-500 text-xs">
+        Created: {{ msg.created_at | date:'short' }}
+      </span>
     </div>
     <p class="text-gray-800 break-words">{{ msg.body }}</p>
 
