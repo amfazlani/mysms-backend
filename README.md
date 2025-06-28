@@ -49,9 +49,9 @@
    cd mysms-messenger/backend
   ```
 
-2. Install Ruby dependencies
+2. Install Ruby dependencies:
 
-  ```bash
+   ```bash
    bundle install
   ```
 
