@@ -77,11 +77,6 @@ rails server
 
 The API will be available at http://localhost:3000
 
-5. The API uses devise gem devise_toke_auth for authentication:
-
-  ```bash
-rails server
-  ```
 
 ### 🖥️ Frontend (Angular)
 
@@ -105,6 +100,30 @@ ng serve
   ```
 
 The app will open at http://localhost:4200
+
+### 📦 Example usage in Angular
+
+Authentication is handled using [devise_token_auth](https://github.com/lynndylanhurley/devise_token_auth), which provides token-based auth for APIs.
+
+After a successful login or registration using `devise_token_auth`, capture the authentication headers from the response and use them in all subsequent API requests:
+
+```ts
+import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment';
+
+const headers = new HttpHeaders({
+  'Content-Type': 'application/json',
+  'access-token': token,    // Received from login/register response
+  'client': clientId,       // Received from login/register response
+  'uid': uid                // Received from login/register response
+});
+
+this.http.get(`${environment.apiBaseUrl}/messages`, { headers })
+  .subscribe(response => {
+    console.log(response);
+  });
+
+```
 
 
 ## 🧪 API Reference.
