@@ -44,15 +44,15 @@
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/yourusername/mysms-messenger.git
-   cd mysms-messenger/backend
+  ```bash
+  git clone https://github.com/yourusername/mysms-messenger.git
+  cd mysms-messenger/backend
   ```
 
 2. Install Ruby dependencies:
 
-   ```bash
-   bundle install
+  ```bash
+  bundle install
   ```
 
 3. Set up Mongoid configuration:
