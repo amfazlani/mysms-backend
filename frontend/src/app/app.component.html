@@ -1,5 +1,14 @@
 <app-navbar></app-navbar>
+
 <main class="p-4 max-w-2xl mx-auto">
-  <app-message-form></app-message-form>
-  <app-message-list></app-message-list>
+  <ng-container *ngIf="user$ | async as user; else showForms">
+    <!-- Show message UI only when user is logged in -->
+    <app-message-form></app-message-form>
+    <app-message-list></app-message-list>
+  </ng-container>
+
+  <ng-template #showForms>
+    <!-- Show login/register forms when logged out -->
+    <router-outlet></router-outlet>
+  </ng-template>
 </main>

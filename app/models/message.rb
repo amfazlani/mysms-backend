@@ -9,5 +9,5 @@ class Message
   field :sid, type: String
   field :session_id, type: String
 
-  index({ session_id: 1 })
+  belongs_to :user
 end

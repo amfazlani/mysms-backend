@@ -1,11 +1,10 @@
 # app/controllers/api/messages_controller.rb
 class Api::MessagesController < ApplicationController
-  include ActionController::Cookies
-
-  before_action :set_session_id
+  include DeviseTokenAuth::Concerns::SetUserByToken
+  before_action :authenticate_user!
 
   def index
-    messages = Message.where(session_id: @session_id)
+    messages = current_user.messages.order(created_at: :desc)
     render json: messages
   end
 
@@ -21,7 +20,7 @@ class Api::MessagesController < ApplicationController
       status_callback: "#{ENV['BASE_URL']}/api/messages/status"
     )
 
-    message = Message.create!(
+    message = current_user.messages.build(
       to: to,
       body: body,
       status: "queued",
@@ -29,19 +28,17 @@ class Api::MessagesController < ApplicationController
       session_id: @session_id
     )
 
-    render json: message, status: :created
+    if message.save
+      # Here add your Twilio SMS send logic
+      render json: message, status: :created
+    else
+      render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def status
     msg = Message.find_by(sid: params[:MessageSid])
     msg.update(status: params[:MessageStatus]) if msg
     head :ok
-  end
-
-  private
-
-  def set_session_id
-    session[:session_id] ||= SecureRandom.hex(10)
-    @session_id = session[:session_id]
   end
 end

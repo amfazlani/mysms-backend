@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require 'logger'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -23,5 +24,8 @@ module MysmsBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
+    config.middleware.use ActionDispatch::Flash
   end
 end

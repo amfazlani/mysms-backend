@@ -8,11 +8,21 @@
 
       <!-- Right section -->
       <div class="flex items-center space-x-4">
-        <!-- Replace with real user info if needed -->
-        <span class="text-sm">Trial User</span>
-        <button class="text-sm px-3 py-1 rounded bg-white text-blue-600 hover:bg-blue-100">
-          Logout
-        </button>
+
+        <!-- Show if user is logged in -->
+        <ng-container *ngIf="user$ | async as user; else loggedOut">
+          <span class="text-sm">{{ user.username || user.email }}</span>
+          <button class="text-sm px-3 py-1 rounded bg-white text-blue-600 hover:bg-blue-100" (click)="logout()">
+            Logout
+          </button>
+        </ng-container>
+
+        <!-- Show if user is NOT logged in -->
+        <ng-template #loggedOut>
+          <a routerLink="/login" class="text-sm hover:underline">Login</a>
+          <a routerLink="/register" class="text-sm hover:underline">Register</a>
+        </ng-template>
+
       </div>
     </div>
   </div>
