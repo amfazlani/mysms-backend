@@ -49,17 +49,20 @@
    cd mysms-messenger/backend
   ```
 
-2. Install Ruby dependencies:
+2. Install Ruby dependencies
+
   ```bash
    bundle install
   ```
 
 3. Set up Mongoid configuration:
+
   ```bash
   rails g mongoid:config
   ```
 
 4. Create .env file and add Twilio credentials:
+
   ```bash
   TWILIO_ACCOUNT_SID=your_twilio_account_sid
   TWILIO_AUTH_TOKEN=your_twilio_auth_token
@@ -67,6 +70,7 @@
   ```
 
 5. Start Rails server:
+
   ```bash
 rails server
   ```
@@ -77,17 +81,20 @@ The API will be available at http://localhost:3000
 ### 🖥️ Frontend (Angular)
 
 1. Navigate to the frontend directory:
+
   ```bash
 cd ../frontend
   ```
 
 2. Install Angular dependencies:
+
   ```bash
 npm install
   ```
 
 
 3. Start the Angular dev server:
+
   ```bash
 ng serve
   ```
