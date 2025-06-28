@@ -77,6 +77,11 @@ rails server
 
 The API will be available at http://localhost:3000
 
+5. The API uses devise gem devise_toke_auth for authentication:
+
+  ```bash
+rails server
+  ```
 
 ### 🖥️ Frontend (Angular)
 
@@ -109,5 +114,6 @@ The app will open at http://localhost:4200
 | POST    | `/api/messages`          |   Send a new SMS message               |
 | GET     | `/api//messages`         |   Get messages for current session/user|
 | POST    | `/api/messages/status`   |   Webhook to update delivery status    |
-| POST    | `/auth/sign_in`          |   Log in (Devise - Bonus)              |
-| DELETE  | `/auth/sign_out(`        |   Log out (Devise - Bonus)             |
+| POST    | `/auth/sign_in`          |   Sign in  (Devise - Bonus)            |
+| DELETE  | `/auth/sign_out`         |   Sign out (Devise - Bonus)            |
+| POST    | `/auth`                  |   Sign Up (Devise - Bonus)             |
