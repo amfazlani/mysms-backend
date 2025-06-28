@@ -1,6 +1,5 @@
 # app/controllers/api/messages_controller.rb
 class Api::MessagesController < ApplicationController
-  include DeviseTokenAuth::Concerns::SetUserByToken
   before_action :authenticate_user!
 
   def index
@@ -29,7 +28,6 @@ class Api::MessagesController < ApplicationController
     )
 
     if message.save
-      # Here add your Twilio SMS send logic
       render json: message, status: :created
     else
       render json: { errors: message.errors.full_messages }, status: :unprocessable_entity

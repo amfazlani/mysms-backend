@@ -13,13 +13,18 @@ export class LoginComponent {
   email = '';
   password = '';
   error = '';
+  errorMessage: string | null = null;
 
   constructor(private auth: AuthService, private router: Router) {}
 
   onSubmit() {
+    this.errorMessage = null;
+
     this.auth.login({ email: this.email, password: this.password }).subscribe({
       next: () => this.router.navigate(['/']),
-      error: (err: any) => this.error = 'Login failed',
+      error: (error: any) => {
+        this.errorMessage = error.error.errors[0] || 'Login failed';
+      }
     });
   }
 }
