@@ -45,8 +45,8 @@
 1. Clone the repository:
 
   ```bash
-  git clone https://github.com/yourusername/mysms-messenger.git
-  cd mysms-messenger/backend
+  git clone https://github.com/amfazlani/mysms-backend.git
+  cd mysms-backend
   ```
 
 2. Install Ruby dependencies:
