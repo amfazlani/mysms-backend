@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:4200'  # <-- your Angular app's URL
+    origins 'https://6860af314a386c6493ac8342--adorable-bavarois-28bb02.netlify.app'
 
     resource '*',
       headers: :any,
