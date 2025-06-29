@@ -18,7 +18,7 @@ export class CableService {
     const client = localStorage.getItem('client') || '';
 
     this.cable = ActionCable.createConsumer(
-      `ws://${environment.API_BASE}/cable?uid=${uid}&access-token=${token}&client=${client}`
+      `wss://${environment.API_BASE}/cable?uid=${uid}&access-token=${token}&client=${client}`
     );
 
     this.subscription = this.cable.subscriptions.create('MessagesChannel', {
