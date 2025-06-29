@@ -37,11 +37,9 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 gem 'mongoid', '~> 8.0'
 gem 'twilio-ruby'
-gem 'devise' # for Bonus 1
 gem 'rack-cors'
 gem 'figaro'
 gem 'devise'
-gem 'pry'
 gem 'devise_token_auth'
 
 group :development, :test do

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MessageService, Message } from '../../services/message.service';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { CableService } from '../../services/cable.service';  // adjust path if needed
 
 @Component({
   selector: 'app-message-list',
@@ -16,28 +17,42 @@ export class MessageListComponent implements OnInit, OnDestroy {
 
   constructor(
     private messageService: MessageService,
-    private auth: AuthService
+    private auth: AuthService,
+    private cableService: CableService
   ) {}
 
-  ngOnInit() {
-    // Track user login state
-    const authSub = this.auth.currentUser$.subscribe(user => {
-      if (user) {
-        this.loadMessages();
+ngOnInit() {
+  const authSub = this.auth.currentUser$.subscribe(user => {
+    if (user) {
+      // Initial fetch
+      this.messageService.getMessages().subscribe(msgs => {
+        this.messages = msgs;
+      });
 
-        // Listen for message updates (from form submission)
-        const updateSub = this.messageService.onMessagesUpdated().subscribe(() => {
-          this.loadMessages();
-        });
+      // Listen for local updates
+      const updateSub = this.messageService.onMessagesUpdated().subscribe((msgs) => {
+        this.messages = msgs;
+      });
 
-        this.subs.push(updateSub);
-      } else {
-        this.messages = [];
-      }
-    });
+      // Listen for ActionCable updates
+      const cableSub = this.cableService.onMessageStatusUpdate().subscribe(msg => {
+        const index = this.messages.findIndex(m => m._id === msg.id);
+        if (index !== -1) {
+          this.messages[index].status = msg.status;
+        }
+      });
 
-    this.subs.push(authSub);
-  }
+      // Push the subscriptions after defining them
+      this.subs.push(updateSub, cableSub);
+    } else {
+      this.messages = [];
+    }
+  });
+
+  // Now push authSub after it's defined
+  this.subs.push(authSub);
+}
+
 
   loadMessages() {
     this.messageService.getMessages().subscribe({

@@ -12,10 +12,10 @@ class Api::MessagesController < ApplicationController
 
     msg = build_message(params[:to], params[:body], sms.sid)
 
-    if message.save
-      render json: message, status: :created
+    if msg.save
+      render json: msg, status: :created
     else
-      render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: msg.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -24,6 +24,12 @@ class Api::MessagesController < ApplicationController
 
     if msg
       msg.update(status: params[:MessageStatus])
+
+      MessagesChannel.broadcast_to(msg.user, {
+        id: msg.id,
+        sid: msg.sid,
+        status: msg.status
+      })
     end
 
     head :ok
@@ -33,6 +39,7 @@ class Api::MessagesController < ApplicationController
 
   def build_message(to, body, sid)
     current_user.messages.build(
+      from: ENV['TWILIO_PHONE'],
       to: to,
       body: body,
       status: "queued",
