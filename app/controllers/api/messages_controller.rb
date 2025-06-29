@@ -17,6 +17,9 @@ class Api::MessagesController < ApplicationController
     else
       render json: { errors: msg.errors.full_messages }, status: :unprocessable_entity
     end
+
+  rescue Twilio::REST::RestError => e
+    render json: { errors: [e.message] }, status: :unprocessable_entity
   end
 
   def status
