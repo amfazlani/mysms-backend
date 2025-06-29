@@ -1,6 +1,6 @@
 # app/controllers/api/messages_controller.rb
 class Api::MessagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:status]
 
   def index
     messages = current_user.messages.order(created_at: :desc)
@@ -8,24 +8,9 @@ class Api::MessagesController < ApplicationController
   end
 
   def create
-    client = Twilio::REST::Client.new(ENV["TWILIO_SID"], ENV["TWILIO_TOKEN"])
-    to = params[:to]
-    body = params[:body]
+    sms = TwilioService.new(params[:to], params[:body]).perform
 
-    sms = client.messages.create(
-      from: ENV["TWILIO_PHONE"],
-      to: to,
-      body: body,
-      status_callback: "#{ENV['BASE_URL']}/api/messages/status"
-    )
-
-    message = current_user.messages.build(
-      to: to,
-      body: body,
-      status: "queued",
-      sid: sms.sid,
-      session_id: @session_id
-    )
+    msg = build_message(params[:to], params[:body], sms.sid)
 
     if message.save
       render json: message, status: :created
@@ -36,7 +21,22 @@ class Api::MessagesController < ApplicationController
 
   def status
     msg = Message.find_by(sid: params[:MessageSid])
-    msg.update(status: params[:MessageStatus]) if msg
+
+    if msg
+      msg.update(status: params[:MessageStatus])
+    end
+
     head :ok
+  end
+
+  private
+
+  def build_message(to, body, sid)
+    current_user.messages.build(
+      to: to,
+      body: body,
+      status: "queued",
+      sid: sid
+    )
   end
 end
