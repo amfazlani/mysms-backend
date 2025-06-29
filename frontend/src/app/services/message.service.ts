@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';  // make sure the path is correct
 import { HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map, switchMap } from 'rxjs/operators';
 import { Subject } from 'rxjs'; // make sure this is also imported
+import { environment } from '../../environments/environment';  // adjust path if needed
 
 export interface Message {
   _id?: string;
@@ -17,7 +18,7 @@ export interface Message {
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
-  private api = 'http://localhost:3000/api/messages';
+  private api = `${environment.API_BASE_URL}/api/messages`;
   private messageListUpdated = new Subject<void>(); // ✅ ADD THIS LINE
 
 constructor(private http: HttpClient, private auth: AuthService) {}

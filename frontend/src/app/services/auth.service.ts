@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';  // adjust path if needed
 
 export interface User {
   id: number;
@@ -9,7 +10,7 @@ export interface User {
   // add other user properties here if needed
 }
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = environment.API_BASE_URL;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
