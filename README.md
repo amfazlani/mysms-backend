@@ -29,6 +29,16 @@
 
 ---
 
+## Live Demo
+
+The app is hosted live at:  
+**[https://adorable-bavarois-28bb02.netlify.app](https://adorable-bavarois-28bb02.netlify.app)**
+
+You can use the test Twilio virtual number for sending messages during testing:
+
+**Test Virtual Number:** `+1 877-780-4236`
+
+
 ## 📦 Installation
 
 ### 🔧 Prerequisites
